@@ -25,6 +25,17 @@ public class DictionaryService {
         return entry;
     }
 
+    public List<Entry> getWordsEndingWith(String s) {
+
+        return DictionaryReference.getDictionary()
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().endsWith(s))
+                .sorted(Map.Entry.comparingByKey())
+                .map(entry -> new Entry(entry.getKey(), entry.getValue()))
+                .collect(Collectors.toList());
+    }
+
     public List<Entry> getWordsStartingWith(String s) {
 
         return DictionaryReference.getDictionary()

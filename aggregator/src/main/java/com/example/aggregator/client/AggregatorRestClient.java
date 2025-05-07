@@ -18,7 +18,8 @@ public class AggregatorRestClient {
         this.restTemplate = restTemplate;
     }
 
-    public Entry getDefinitionFor(String word) {
+    public Entry getDefinitionFor(String word)
+    {
 
         String uri = "http://localhost:9091/getWord/" + word;
         Entry result = restTemplate.getForObject(uri, Entry.class);
@@ -26,7 +27,19 @@ public class AggregatorRestClient {
         return result;
     }
 
-    public List<Entry> getWordsStartingWith(String chars) {
+    public List<Entry> getWordsEndingWith(String chars)
+    {
+
+        String uri = "http://localhost:9091/getWordsEndingWith/" + chars;
+        ResponseEntity<Entry[]> responseEntity = restTemplate.getForEntity(uri, Entry[].class);
+
+        Entry[] entryArray = responseEntity.getBody();
+        return Arrays.stream(entryArray)
+                .collect(Collectors.toList());
+    }
+
+    public List<Entry> getWordsStartingWith(String chars)
+    {
 
         String uri = "http://localhost:9091/getWordsStartingWith/" + chars;
         ResponseEntity<Entry[]> responseEntity = restTemplate.getForEntity(uri, Entry[].class);
